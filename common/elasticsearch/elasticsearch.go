@@ -92,8 +92,8 @@ func CreateElasticSearchConfig(uri *url.URL) (*ElasticSearchConfig, error) {
 	var startupFns []elastic.ClientOptionFunc
 	if len(opts["nodes"]) > 0 {
 		startupFns = append(startupFns, elastic.SetURL(opts["nodes"]...))
-	} else if uri.Opaque != "" {
-		startupFns = append(startupFns, elastic.SetURL(uri.Opaque))
+	} else if uri.Scheme != "" && uri.Host != "" {
+	    startupFns = append(startupFns, elastic.SetURL(uri.Scheme+"://"+uri.Host))
 	} else {
 		return nil, fmt.Errorf("There is no node assigned for connecting ES cluster")
 	}

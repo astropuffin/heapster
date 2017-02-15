@@ -1,7 +1,7 @@
 all: build
 
 TAG = v1.2.0
-PREFIX = gcr.io/google_containers
+PREFIX = dronedeploy
 FLAGS = 
 
 SUPPORTED_KUBE_VERSIONS = "1.3.6"
@@ -44,5 +44,8 @@ clean:
 	rm -f eventer
 	rm -f deploy/docker/heapster
 	rm -f deploy/docker/eventer
+
+push: container
+	docker push $(PREFIX)/heapster:$(TAG)
 
 .PHONY: all deps build sanitize test-unit test-unit-cov test-integration container grafana influxdb clean
